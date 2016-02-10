@@ -1,0 +1,9 @@
+html {
+    font-family: "Arial";
+}
+
+@media (max-height:640px) {
+    .menu {
+        color: yellow;
+    }
+}
