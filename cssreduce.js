@@ -109,8 +109,10 @@ var cssreduce = {
     normalizeSelector: function(sel) {
         return sel
             .replace(/::\-moz\-focus\-inner/g, '')
-            .replace(/x:\-o\-prefocus/g, '')
-            .replace(/::\-ms\-expand/g, '');
+            .replace(/:\-o\-prefocus/g, '')
+            .replace(/::\-ms\-expand/g, '')
+            .replace(/^,/, '')
+            .replace(/,$/, '');
     },
 
     getReport: function(hash) {
