@@ -69,6 +69,14 @@ var cssreduce = {
                                 isMediaQuery = true;
                             } else if (selector.startsWith('@-webkit-keyframes')) {
                                 isMediaQuery = false;
+                            } else if (selector.startsWith('@-moz-keyframes')) {
+                                isMediaQuery = false;
+                            } else if (selector.startsWith('@-o-keyframes')) {
+                                isMediaQuery = false;
+                            } else if (selector.startsWith('@keyframes')) {
+                                isMediaQuery = false;
+                            } else if (selector.startsWith('@font-face')) {
+                                isMediaQuery = false;
                             } else {
                                 isMediaQuery = false;
                                 yield selector;
