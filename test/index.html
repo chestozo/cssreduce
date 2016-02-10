@@ -27,6 +27,11 @@
 <div id="content">
     <h3>CssReduce test results</h3>
     <script type="text/javascript">
+        // TODO tests
+        // @keyframe
+        // mediaqueries
+        // something else? ..
+
         cssreduce.checkFile('test-selectors-01.css', function(report) {
             console.info('start tests');
             console.assert(report.unused.length === 2, '2 unused selectors');
