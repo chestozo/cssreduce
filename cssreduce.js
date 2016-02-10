@@ -13,7 +13,7 @@ var cssreduce = {
     },
 
     getFileContents: function(url, callback) {
-        $.ajax({
+        jQuery.ajax({
             url: url,
             type: 'GET',
             dataType: 'text',
