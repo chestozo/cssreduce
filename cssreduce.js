@@ -15,16 +15,6 @@ var cssreduce = {
                 callback(contents);
             },
         });
-
-        // var testStylesheetContents =
-        //     'html { font-family: "Arial"; } \n' +
-        //     '#content  { color: glue; } \n' +
-        //     '.menu a { color: red; font-size: 12px; } \n' +
-        //     '.menu .menu-item:first-letter { font-weight: bold; }';
-
-        // setTimeout(function() {
-        //     callback(testStylesheetContents);
-        // }, 100);
     },
 
     processStylesheet: function(contents, callback) {
