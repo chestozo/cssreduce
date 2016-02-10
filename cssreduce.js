@@ -46,6 +46,7 @@ var cssreduce = {
 
     getSelectors: function(contents) {
         contents = contents.replace(/[\n\r\0]/g, '');
+        contents = contents.replace(/\/\*.*?\*\//g, '');
 
         var selectors = [];
 
