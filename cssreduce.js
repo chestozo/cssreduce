@@ -2,6 +2,7 @@
     TODO
     - [ ] live collect mode.
     - [ ] full page test (includes all stylesheets and <style/> tags.
+    - [ ] persistent mode (store information in localStorage)
 */
 
 var cssreduce = {
@@ -121,9 +122,18 @@ var cssreduce = {
 
     normalizeSelector: function(sel) {
         return sel
+            .replace(/:after/g, '')
+            .replace(/:before/g, '')
+
+            .replace(/:link/g, '')
+            .replace(/:hover/g, '')
+            .replace(/:active/g, '')
+            .replace(/:visited/g, '')
+
             .replace(/::\-moz\-focus\-inner/g, '')
             .replace(/:\-o\-prefocus/g, '')
             .replace(/::\-ms\-expand/g, '')
+
             .replace(/^,/, '')
             .replace(/,$/, '');
     },
