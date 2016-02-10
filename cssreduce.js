@@ -3,6 +3,7 @@
     - [ ] persistent mode (store information in localStorage)
     - [ ] live collect mode (see)
     - [ ] full page test (includes all stylesheets and <style/> tags.
+    - [ ] "selectors added" info in report (usefull for persistent mode) - and like this we can find specific styles used only on current page
 */
 
 var cssreduce = {
@@ -12,6 +13,11 @@ var cssreduce = {
         this.hashes || (this.hashes = {});
         this.hashes[url] || (this.hashes[url] = {});
         return this.hashes[url];
+    },
+
+    setPersistentMode: function() {
+        this.persistent = true;
+        this.restoreState();
     },
 
     dumpState: function() {
@@ -51,7 +57,7 @@ var cssreduce = {
 
         var selectors = this.getSelectors(contents);
 
-        if (this.persist) {
+        if (this.persistent) {
             this.restoreState();
         }
 
@@ -71,7 +77,7 @@ var cssreduce = {
 
         callback(this.getReport(hash));
 
-        if (this.persist) {
+        if (this.persistent) {
             this.dumpState();
         }
     },
