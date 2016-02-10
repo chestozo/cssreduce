@@ -1,0 +1,13 @@
+html {
+    font-family: "Arial";
+}
+
+
+   #content  { color: glue;
+
+    }.menu a { color: red;
+
+        font-size: 12px;
+
+                 }
+.menu .menu-item:first-letter{font-weight:bold;}
