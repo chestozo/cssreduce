@@ -39,9 +39,7 @@ var cssreduce = {
     },
 
     getSelectors: function(contents) {
-        contents = contents.replace('\n', '');
-        contents = contents.replace('\r', '');
-        contents = contents.replace('\0', '');
+        contents = contents.replace(/[\n\r\0]/g, '');
 
         var selectors = [];
 
@@ -51,6 +49,8 @@ var cssreduce = {
                 var openBracketIndex;
                 var closeBracketIndex;
                 var level = 0;
+                var selector;
+                var isMediaQuery;
 
                 while (true) {
                     openBracketIndex = contents.indexOf('{', curIndex);
@@ -62,8 +62,20 @@ var cssreduce = {
                     }
 
                     if (openBracketIndex < closeBracketIndex) {
+                        selector = contents.substring(curIndex, openBracketIndex).trim();
+
                         if (level === 0) {
-                            yield contents.substring(curIndex, openBracketIndex).trim();
+                            if (selector.startsWith('@media')) {
+                                isMediaQuery = true;
+                            } else {
+                                isMediaQuery = false;
+                                yield selector;
+                            }
+                        } else {
+                            // Selector nested inside the @media query.
+                            if (isMediaQuery) {
+                                yield selector;
+                            }
                         }
 
                         level++;
@@ -71,6 +83,7 @@ var cssreduce = {
                     } else {
                         level--;
                         curIndex = closeBracketIndex + 1;
+                        isMediaQuery = false;
                     }
                 }
             }
