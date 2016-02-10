@@ -1,6 +1,7 @@
 /*
     TODO
-    - [ ] live collect mode
+    - [ ] live collect mode.
+    - [ ] full page test (includes all stylesheets and <style/> tags.
 */
 
 var cssreduce = {
