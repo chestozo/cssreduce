@@ -33,9 +33,7 @@
         // something else? ..
 
         cssreduce.checkFile('test-selectors-01.css', function(report) {
-            console.info('start tests');
-            console.assert(report.unused.length === 2, '2 unused selectors');
-            console.info('tests done');
+            console.log(report);
         });
     </script>
 </div>

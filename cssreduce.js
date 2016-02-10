@@ -37,7 +37,12 @@ var cssreduce = {
         for (var i = 0, len = selectors.length; i < len; i++) {
             sel = selectors[i];
             selnorm = this.normalizeSelector(sel);
-            hash[sel] = hash[sel] || !!document.querySelectorAll(selnorm).length;
+            try {
+                hash[sel] = hash[sel] || !!document.querySelectorAll(selnorm).length;
+            } catch (ex) {
+                console.error(ex);
+                hash[sel] = false;
+            }
         }
 
         callback(this.getReport(hash));
@@ -68,7 +73,7 @@ var cssreduce = {
 
                     if (openBracketIndex < closeBracketIndex) {
                         if (level === 0) {
-                            yield contents.substring(curIndex, openBracketIndex - 1).trim();
+                            yield contents.substring(curIndex, openBracketIndex).trim();
                         }
 
                         level++;
