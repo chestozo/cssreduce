@@ -1,3 +1,8 @@
+/*
+    TODO
+    - [ ] live collect mode
+*/
+
 var cssreduce = {
     getHash: function(url) {
         this.hashes || (this.hashes = {});
