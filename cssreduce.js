@@ -1,8 +1,14 @@
 var cssreduce = {
+    getHash: function(url) {
+        this.hashes || (this.hashes = {});
+        this.hashes[url] || (this.hashes[url] = {});
+        return this.hashes[url];
+    },
+
     checkFile: function(url, callback) {
         var that = this;
         this.getFileContents(url, function(contents) {
-            that.processStylesheet(contents, callback);
+            that.processStylesheet(url, contents, callback);
         });
     },
 
@@ -17,9 +23,9 @@ var cssreduce = {
         });
     },
 
-    processStylesheet: function(contents, callback) {
+    processStylesheet: function(url, contents, callback) {
         var selectors = this.getSelectors(contents);
-        var hash = {};
+        var hash = this.getHash(url);
         var sel;
         var selnorm;
         var nodes;
