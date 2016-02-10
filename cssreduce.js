@@ -9,6 +9,7 @@ var cssreduce = {
     getFileContents: function(url, callback) {
         var testStylesheetContents =
             'html { font-family: "Arial"; } \n' +
+            '#content  { color: glue; } \n' +
             '.menu a { color: red; font-size: 12px; } \n' +
             '.menu .menu-item:first-letter { font-weight: bold; }';
 
