@@ -34,7 +34,48 @@ var cssreduce = {
     },
 
     getSelectors: function(contents) {
-        return [];
+        contents = contents.replace('\n', '');
+        contents = contents.replace('\r', '');
+        contents = contents.replace('\0', '');
+
+        var selectors = [];
+
+        var selectorIterator = {
+            [Symbol.iterator]: function*() {
+                var curIndex = 0;
+                var openBracketIndex;
+                var closeBracketIndex;
+                var level = 0;
+
+                while (true) {
+                    openBracketIndex = contents.indexOf('{', curIndex);
+                    closeBracketIndex = contents.indexOf('}', curIndex);
+
+                    // No more CSS blocks left.
+                    if (openBracketIndex <= 0) {
+                        break;
+                    }
+
+                    if (openBracketIndex < closeBracketIndex) {
+                        if (level === 0) {
+                            yield contents.substring(curIndex, openBracketIndex - 1).trim();
+                        }
+
+                        level++;
+                        curIndex = openBracketIndex + 1;
+                    } else {
+                        level--;
+                        curIndex = closeBracketIndex + 1;
+                    }
+                }
+            }
+        };
+
+        for (var selector of selectorIterator) {
+            selectors.push(selector);
+        }
+
+        return selectors;
     },
 
     normalizeSelector: function(sel) {
