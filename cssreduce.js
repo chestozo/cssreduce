@@ -67,6 +67,8 @@ var cssreduce = {
                         if (level === 0) {
                             if (selector.startsWith('@media')) {
                                 isMediaQuery = true;
+                            } else if (selector.startsWith('@-webkit-keyframes')) {
+                                isMediaQuery = false;
                             } else {
                                 isMediaQuery = false;
                                 yield selector;
