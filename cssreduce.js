@@ -1,15 +1,29 @@
 /*
     TODO
-    - [ ] live collect mode.
-    - [ ] full page test (includes all stylesheets and <style/> tags.
     - [ ] persistent mode (store information in localStorage)
+    - [ ] live collect mode (see)
+    - [ ] full page test (includes all stylesheets and <style/> tags.
 */
 
 var cssreduce = {
+    _key: '__$%cssreduce-state%$__',
+
     getHash: function(url) {
         this.hashes || (this.hashes = {});
         this.hashes[url] || (this.hashes[url] = {});
         return this.hashes[url];
+    },
+
+    dumpState: function() {
+        localStorage.setItem(this._key, JSON.stringify(this.hashes || {}));
+    },
+
+    restoreState: function() {
+        this.hashes = JSON.parse(localStorage.getItem(this._key) || '{}');
+    },
+
+    dropState: function() {
+        localStorage.setItem(this._key, null);
     },
 
     checkFile: function(url, callback) {
@@ -31,11 +45,18 @@ var cssreduce = {
     },
 
     processStylesheet: function(url, contents, callback) {
-        var selectors = this.getSelectors(contents);
-        var hash = this.getHash(url);
         var sel;
         var selnorm;
         var nodes;
+
+        var selectors = this.getSelectors(contents);
+
+        if (this.persist) {
+            this.restoreState();
+        }
+
+        var hash = this.getHash(url);
+
 
         for (var i = 0, len = selectors.length; i < len; i++) {
             sel = selectors[i];
@@ -49,6 +70,10 @@ var cssreduce = {
         }
 
         callback(this.getReport(hash));
+
+        if (this.persist) {
+            this.dumpState();
+        }
     },
 
     getSelectors: function(contents) {
@@ -122,6 +147,8 @@ var cssreduce = {
 
     normalizeSelector: function(sel) {
         return sel
+            .replace(/::after/g, '')
+            .replace(/::before/g, '')
             .replace(/:after/g, '')
             .replace(/:before/g, '')
 
