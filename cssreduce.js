@@ -153,6 +153,7 @@ var cssreduce = {
 
     normalizeSelector: function(sel) {
         return sel
+            .replace(/::first\-letter/g, '')
             .replace(/::after/g, '')
             .replace(/::before/g, '')
             .replace(/:after/g, '')
@@ -162,6 +163,8 @@ var cssreduce = {
             .replace(/:hover/g, '')
             .replace(/:active/g, '')
             .replace(/:visited/g, '')
+            .replace(/:first\-child/g, '')
+            .replace(/:last\-child/g, '')
 
             .replace(/::\-moz\-focus\-inner/g, '')
             .replace(/:\-o\-prefocus/g, '')
